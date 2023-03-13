@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta CEP</title>
+
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PRODIGYAN</h1>
+        <h2>Consultando CEP</h2>
+        <form>
+            <div class="form-group">
+                <label for="nome">NOME</label>
+                <input type="text" class="form-control" id="nome">
+                <small>Maria Francisca da Silva</small>
+            <div class="form-group">
+                <label for="email">E-MAIL</label>
+                <input type="text" class="form-control" id="email">
+                <small>exemplo@exemplo.com</small>
+            <div class="form-group">
+                <label for="tel">TELEFONE</label>
+                <input type="text" class="form-control" maxlength="14" id="tel">
+                <small>(00)99999-9999</small>
+            <div class="form-group">
+                <label for="cep">CEP</label>
+                <input type="text" class="form-control" maxlength="9" id="cep">
+                <small>00000-000</small>
+            </div>
+            <div class="form-group">
+                <label for="logradouro">Logradouro</label>
+                <input type="text" class="form-control" id="logradouro">
+                <small>Logradouro</small>
+            </div>
+            <div class="form-group">
+                <label for="numero">NÚMERO</label>
+                <input type="text" class="form-control" id="NUMERO">
+                <small>Número</small>
+            </div>
+            <div class="form-group">
+                <label for="complemento">COMPLEMENTO</label>
+                <input type="text" class="form-control" id="complemento">
+                <small>Complemento</small>
+            </div>
+            <div class="form-group">
+                <label for="bairro">Bairro</label>
+                <input type="text" class="form-control" id="bairro">
+                <small>Bairro</small>
+            </div>
+            <div class="form-group">
+                <label for="localidade">Localidade</label>
+                <input type="text" class="form-control" id="localidade">
+                <small>Cidade</small>
+            </div>
+            <div class="form-group">
+                <label for="uf">UF</label><input type="text" class="form-control" id="uf">
+                <small>Estado</small>
+            </div>  
+            
+        </form>
+    </div>
+    <script>
+        const cep = document.querySelector("#cep")
+
+const showData = (result)=>{
+    for(const campo in result){
+        if(document.querySelector("#"+campo)){
+            document.querySelector("#"+campo).value = result[campo]
+        }
+    }
+}
+
+
+cep.addEventListener("blur",(e)=>{
+    let search = cep.value.replace("-","")
+    const options = {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'default'
+    }
+
+    fetch(`https://viacep.com.br/ws/${search}/json/`)
+    .then(response=>{response.json()
+        .then( data => showData(data))
+    })
+
+    .catch(e => alert('CEP inválido - Digite um cep válido'))
+    return;
+       })
+       
+    </script>
+
+ 
+</body>
+</html>
